@@ -7,6 +7,16 @@ spring:
       server:
         git:
           uri: https://github.com/Qarani-m/aws-configuration
-          default-label: main
+          default-label: dev
 server:
   port: 8888
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://discovery-server:8761/eureka}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
