@@ -28,3 +28,19 @@ jobs:
         tags: qarani/config-server:latest
         build-args: |
           SPRING_PROFILES_ACTIVE=prod
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to EC2 via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker pull qarani/config-server:latest
+          docker stop config-server || true
+          docker rm config-server || true
+          docker run -d --name config-server --network mini-aws-network --env-file /home/runner/.config-server-prod.env -p 8888:8888 qarani/config-server:latest
