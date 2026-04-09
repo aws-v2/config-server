@@ -46,11 +46,11 @@ jobs:
           username: ${{ secrets.STAGING_USERNAME }}
           key: ${{ secrets.STAGING_SSH_KEY }}
           script: |
-            docker network create mini-aws-network || true
+            docker network create aws-network || true
             docker pull qarani/config-server:staging
             docker stop config-server-staging || true
             docker rm config-server-staging || true
             docker run -d --name config-server-staging \
-              --network  mini-aws-network \
+              --network  aws-network \
               -p 8888:8888 \
               qarani/config-server:staging
