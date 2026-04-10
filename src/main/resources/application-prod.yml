@@ -1,0 +1,46 @@
+server:
+  port: ${PROD_SERVER_PORT}
+
+api:
+  version: ${PROD_API_VERSION}
+
+frontend:
+  url: ${PROD_FRONTEND_URL}
+
+jwt:
+  secret: ${PROD_JWT_SECRET}
+  expiration: ${PROD_JWT_EXPIRATION}
+
+nats:
+  url: ${PROD_NATS_URL}
+  username: ${PROD_NATS_USERNAME}
+  password: ${PROD_NATS_PASSWORD}
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${PROD_CONFIG_GIT_URI}
+          default-label: ${PROD_CONFIG_GIT_LABEL}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${PROD_EUREKA_SERVER_URL}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${PROD_MANAGEMENT_INCLUDE}
+
+logging:
+  level:
+    root: INFO

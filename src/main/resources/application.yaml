@@ -1,16 +1,15 @@
+server:
+  port: ${SERVER_PORT:8888}
+
 spring:
   application:
-    name: configserver
-
+    name: config-server
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/Qarani-m/aws-configuration
-          default-label: dev
-server:
-  port: 8888
-
+          uri: ${CONFIG_GIT_URI:https://github.com/Qarani-m/aws-configuration}
+          default-label: ${CONFIG_GIT_LABEL:dev}
 
 eureka:
   client:
