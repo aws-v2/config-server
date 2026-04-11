@@ -46,11 +46,24 @@ jobs:
           username: ${{ secrets.STAGING_USERNAME }}
           key: ${{ secrets.STAGING_SSH_KEY }}
           script: |
-            docker network create aws-network || true
+            docker network create aws-staging-network || true
             docker pull qarani/config-server:staging
             docker stop config-server-staging || true
             docker rm config-server-staging || true
             docker run -d --name config-server-staging \
-              --network  aws-network \
+              --network aws-staging-network \
+              -e SPRING_PROFILES_ACTIVE=staging \
+              -e STAGING_SERVER_PORT=8888 \
+              -e STAGING_API_VERSION=/api/v1 \
+              -e STAGING_FRONTEND_URL=http://frontend-staging:5173 \
+              -e STAGING_JWT_SECRET=staging-secret-key-change-this-in-production \
+              -e STAGING_JWT_EXPIRATION=86400000 \
+              -e STAGING_NATS_URL=nats://nats-staging:4222 \
+              -e STAGING_NATS_USERNAME=config-server \
+              -e STAGING_NATS_PASSWORD=config-secret \
+              -e STAGING_CONFIG_GIT_URI=https://github.com/Qarani-m/aws-configuration \
+              -e STAGING_CONFIG_GIT_LABEL=staging \
+              -e STAGING_EUREKA_SERVER_URL=http://discovery-server-staging:8761/eureka \
+              -e STAGING_MANAGEMENT_INCLUDE=refresh,health,info \
               -p 8888:8888 \
               qarani/config-server:staging
