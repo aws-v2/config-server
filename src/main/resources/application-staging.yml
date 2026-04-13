@@ -13,8 +13,8 @@ jwt:
 
 nats:
   url: ${STAGING_NATS_URL:nats://nats:4222}
-  username: ${STAGING_NATS_USERNAME:config-server}
-  password: ${STAGING_NATS_PASSWORD:config-secret}
+  username: ${STAGING_NATS_USERNAME:nats-staging-user}
+  password: ${STAGING_NATS_PASSWORD:nats-staging-password}
 
 spring:
   application:
@@ -29,7 +29,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${STAGING_EUREKA_SERVER_URL:http://discovery-server:8761/eureka}
+      defaultZone: ${STAGING_EUREKA_SERVER_URL:http://discovery-server-staging:8761/eureka}
     register-with-eureka: true
     fetch-registry: true
   instance:

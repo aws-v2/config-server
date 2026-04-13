@@ -59,8 +59,8 @@ jobs:
               -e STAGING_JWT_SECRET=staging-secret-key-change-this-in-production \
               -e STAGING_JWT_EXPIRATION=86400000 \
               -e STAGING_NATS_URL=nats://nats-staging:4222 \
-              -e STAGING_NATS_USERNAME=config-server \
-              -e STAGING_NATS_PASSWORD=config-secret \
+              -e STAGING_NATS_USERNAME=nats-staging-user \
+              -e STAGING_NATS_PASSWORD=nats-staging-password \
               -e STAGING_CONFIG_GIT_URI=https://github.com/Qarani-m/aws-configuration \
               -e STAGING_CONFIG_GIT_LABEL=staging \
               -e STAGING_EUREKA_SERVER_URL=http://discovery-server-staging:8761/eureka \
