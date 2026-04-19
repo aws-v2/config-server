@@ -13,9 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class DocsService {
 
-    private static final String PUBLIC_PATH = "docs/internal/";
-    // private static final String PUBLIC_PATH = "docs/public/";
-    private static final String INTERNAL_PATH = "docs/internal/";
+    private static final String PUBLIC_PATH = "./docs/public/";
+    private static final String INTERNAL_PATH = "./docs/internal/";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

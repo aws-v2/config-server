@@ -1,9 +1,9 @@
 {
-  "service": "iam-service",
+  "service": "config-server",
   "version": "1.0.0",
   "type": "internal",
-  "title": "IAM Internal Documentation",
-  "description": "Internal engineering documentation for Identity and Access Management service",
+  "title": "Config Server Internal Documentation",
+  "description": "Internal engineering documentation for Config Server service",
   "categories": [
     {
       "title": "System Architecture",

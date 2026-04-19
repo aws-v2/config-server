@@ -1,5 +1,5 @@
 {
-  "service": "Identity",
+  "service": "Config Server",
   "version": "V1",
   "categories": [
     {
