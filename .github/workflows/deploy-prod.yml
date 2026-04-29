@@ -62,23 +62,31 @@ jobs:
           curl -fsSL https://tailscale.com/install.sh | sh
           sudo tailscale up --authkey ${{ secrets.TAILSCALE_AUTH_KEY }}
 
-      - name: Deploy to Prod via SSH over Tailscale
+      - name: Deploy Config Server (Swarm)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USERNAME }}
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
-            docker network create --driver overlay aws-prod-network || true
+            set -e
 
+            echo "Ensuring overlay network exists..."
+            docker network create --driver overlay prod-overlay-net || true
+
+            echo "Pulling latest image..."
             docker pull qarani/config-server:prod
 
+            echo "Removing old service..."
             docker service rm config-server-prod || true
+
+            echo "Deploying config-server-prod..."
 
             docker service create \
               --name config-server-prod \
-              --network aws-prod-network \
+              --network prod-overlay-net \
               --publish published=8888,target=8888 \
+              --replicas 1 \
               --env SPRING_PROFILES_ACTIVE=prod \
               --env PROD_SERVER_PORT=8888 \
               --env PROD_API_VERSION=/api/v1 \
@@ -94,6 +102,5 @@ jobs:
               --env PROD_MANAGEMENT_INCLUDE=refresh,health,info \
               qarani/config-server:prod
 
-
-
+            echo "Config server deployed."
 
