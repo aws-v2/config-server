@@ -84,7 +84,7 @@ jobs:
 
             docker service create \
               --name config-server-prod \
-              --network prod-overlay-net \
+              --network aws-prod-network \
               --publish published=8888,target=8888 \
               --replicas 1 \
               --env SPRING_PROFILES_ACTIVE=prod \
