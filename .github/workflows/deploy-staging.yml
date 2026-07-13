@@ -49,7 +49,9 @@ jobs:
       with:
         context: .
         push: true
-        tags: qarani/config-server:staging
+        tags: |
+          qarani/config-server:staging-${{ github.sha }}
+          qarani/config-server:staging
         build-args: |
           SPRING_PROFILES_ACTIVE=staging
 
@@ -73,7 +75,7 @@ jobs:
           key: ${{ secrets.STAGING_SSH_KEY }}
           script: |
             docker network create aws-staging-network || true
-            docker pull qarani/config-server:staging
+            docker pull qarani/config-server:staging-${{ github.sha }}
             docker stop config-server-staging || true
             docker rm config-server-staging || true
             docker run -d --name config-server-staging \
@@ -92,7 +94,7 @@ jobs:
               -e STAGING_EUREKA_SERVER_URL=http://discovery-server-staging:8761/eureka \
               -e STAGING_MANAGEMENT_INCLUDE=refresh,health,info \
               -p 8888:8888 \
-              qarani/config-server:staging
+              qarani/config-server:staging-${{ github.sha }}
 
 
 
